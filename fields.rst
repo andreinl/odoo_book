@@ -4,16 +4,6 @@ Fields
 All fields
 ==========
 
-All fields can be setted in readonly for all but some states::
-
-    _columns = {
-        'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True, states={
-            'draft': [('readonly', False)],
-            'wait_technical_validation': [('readonly', False)],
-            'wait_manager_validation': [('readonly', False)]}
-        ),
-    }
-
 From Odoo 8.0:
 --------------
 A value of select="1" means that the field is included in the basic search, and a value of select="2" means that it is in the advanced search.
@@ -26,27 +16,7 @@ Functional field
 
 Complete example::
 
-    class sale_order_line(osv.osv):
-        _inherit = "sale.order.line"
 
-        def _with_bom(self, cr, uid, ids, field_name, arg, context):
-            result = {}
-            
-            lines = self.browse(cr, uid, ids)
-            
-            for line in lines:
-                if line.product_id.supply_method == 'produce':
-                    result[line.id] = True
-                else:
-                    result[line.id] = False
-            
-            return result
-
-        _columns = {
-            'with_bom': fields.function(_with_bom, method=True, type='boolean')
-        }
-
-    sale_order_line()
 
 
 If function type is *'selection'* parameter selection should be set::

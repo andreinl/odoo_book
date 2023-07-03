@@ -18,9 +18,9 @@ Sometime you need to create a record that has a subrecords, in this case you hav
 
     rent_line_ids = []
     for rentable in rentables:
-        rent_line_ids.append(self.pool['select.rent.lines'].create(cr, uid, {'name': rentable.name}))
+        rent_line_ids.append(self.env['select.rent.lines'].create({'name': rentable.name}))
     
-    select_asset_id = self.pool['select.rent.asset'].create(cr, uid, {
+    select_asset_id = self.env['select.rent.asset'].create({
         'name': order.name,
         'rent_line_ids': [(6, 0, rent_line_ids)],
     })
@@ -47,6 +47,16 @@ Or you can pass a list of dictionaries with the values of subrecords::
  * \(5\)                    unlink all (like using (3,ID) for all linked records)
  * (6, False, [IDs])          replace the list of linked IDs (like using (5) then (4, ID) for each ID in the list of IDs)
 
+
+From v.15.0:
+
+ * Command.create(vals) | (0, 0, { values }) link to a new record that needs to be created with the given values dictionary
+ * Command.update(ID, vals) | (1, ID, { values }) update the linked record with id = ID (write *values* on it)
+ * Command.delete(ID) | (2, ID) remove and delete the linked record with id = ID (calls unlink on ID, that will delete the object completely, and the link to it as well)
+ * Command.unlink(ID) | (3, ID) cut the link to the linked record with id = ID (delete the relationship between the two objects but does not delete the target object itself)
+ * Command.link(ID) | (4, ID) link to existing record with id = ID (adds a relationship)
+ * Command.clear() | (5) unlink all (like using (3,ID) for all linked records)
+ * Command.set([IDs]) | (6, 0, [IDs]) replace the list of linked IDs (like using (5) then (4,ID) for each ID in the list of IDs)
 
 write(self, cr, uid, ids, values, context=None)
 ===============================================
