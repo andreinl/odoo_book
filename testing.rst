@@ -1,0 +1,5 @@
+
+
+createdb -U openerp testdb
+
+
