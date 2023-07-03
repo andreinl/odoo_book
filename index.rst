@@ -12,6 +12,7 @@ Contents:
     :maxdepth: 2
     
     intro
+`intro <intro.rst>`_
     installation
     fields
     methods
