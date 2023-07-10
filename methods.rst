@@ -1,4 +1,4 @@
-ORM Methods of orm.Model or models.Model (new API) objects
+ORM Methods of models.Model objects
 ************************************************
 
 _description
@@ -58,20 +58,11 @@ From v.15.0:
  * Command.clear() | (5) unlink all (like using (3,ID) for all linked records)
  * Command.set([IDs]) | (6, 0, [IDs]) replace the list of linked IDs (like using (5) then (4,ID) for each ID in the list of IDs)
 
-write(self, cr, uid, ids, values, context=None)
-===============================================
+write(self, values)
+===================
 
-.. note:: ids can be integer, long or list. We should handle it when writing our custom write() method.
-
-::
-
-    def write(self, cr, uid, ids, values, context=None):
-        if not ids:
-            return False
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        
-        openerp_result = super(hr_contractor, self).write(cr, uid, ids, values, context)
+    def write(self, values):
+        openerp_result = super().write(values)
 
 
 copy(self, cr, uid, order_id, defaults, context=None)
