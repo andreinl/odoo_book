@@ -13,6 +13,7 @@ Contents:
 - `ORM Methods of orm.Model or models.Model (new API) objects <methods.rst>`_
 - `Managing views <views.rst>`_
 - `Actions <actions.rst>`_
+- `Portal <portal.rst>`_
 - `How to debug templates in Odoo 8.0 <templates.rst>`_
 - `Using Sequences <sequences.rst>`_
 - `Debugging <debug.rst>`_
