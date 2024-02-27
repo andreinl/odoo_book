@@ -518,6 +518,14 @@ Standard methods
     'exists'
 
 
+Recordset filters
+=================
+
+- recordset.filtered(lambda x: x.y == condition)
+- recordset.filtered_domain(domain)
+- recordset.mapped(<field>)
+
+
 Domain filters
 ==============
 
@@ -567,10 +575,6 @@ In this example::
     res_sim_traffic - is a class name and the name of a table
     sim_id and call_date - columns on which we add index
 
-
-
-New Odoo 8.0 API
-****************
 
 OpenChatter
 ===========
