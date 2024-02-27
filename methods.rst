@@ -452,47 +452,14 @@ This function is used to get an id (res_id in 'ir.model.data') of a view ('ir.ui
     form_id = form_res and form_res[1] or False
 
 
-browse(self, cr, uid, object_id, context)
-=========================================
-
-**by Fabien Pinckaers**
-
-Using read() is a bad practice. read() is used for web-services calls
-but in your own method calls you should always use browse(). Not only,
-it allows s a better quality of the code, but it's also better for the
-performance.
-
-    - **read()** calls name_get for many2one fields producing extra SQL queries you probably don't need.
-    - **browse()** is optimized for prefetching and auto-load of fields.
-
-It's true that browse() may load a few fields you do not need (not all).
-It prefetches stored fields, because those fields do not costs anything
-to load in terms of performance.
-
-It's very complex to optimize for performance with read() when the code
-is complex (involves loops, other method calls). Whereas, with browse(),
-the framework do the optimization job for you.
-
-Usually, code implemented with read are often with complexities of O(n)
-or O(n²) as soon as there is loops in your methods. But codes written
-with browse() are automatically O(1) if browse is called at the
-beginning of your computations. (not inside loops)
-
-Want a small example? Try this code on res.partner::
-
-    for company in self.browse(cr, uid, ids, context=context):
-        for people in company.child_ids:
-            print company.name, people.country_id.code
-
-The above will do 6 SQL queries, whatever the length of ids and number
-of people/countries. (if IDS>200, he will split into subqueries)
-
-The same code with read(), you will probably end up with 3*len(ids) + 3
-queries.
+browse(object_id)
+=================
+This function return an object (record). All fields are record properties
 
 
-Long story short: browse() scale, read() not. (even in v7 or preceding
-versions)
+read([object_id], <fields list>)
+================================
+Read returns a dictionary. They say it is slower and don't scalle, but if you don't need all the fields it can be much faster than Browse
 
 
 Standard methods
